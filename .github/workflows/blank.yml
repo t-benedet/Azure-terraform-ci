@@ -7,16 +7,6 @@ on:
   pull_request:
  
 jobs:
-  Azure_Login:
-    name: 'Log in on Azure environment'
-    env:
-      ADMINISTRATOR_LOGIN:  ${{ secrets.AZURE_ADMINISTRATOR_LOGIN }}
-      ADMINISTRATOR_PASSWORD: ${{ secrets.AZURE_ADMINISTRATOR_PASSWORD }}
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-    - name: Log on Azure
-      run: az login -u ${{ secret.ADMINISTRATOR_LOGIN }} -p ${{ secret.ADMINISTRATOR_PASSWORD }}
   terraform:
     name: 'Terraform'
     env:
