@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run OPA
-      uses: open-policy-agent/opa
+      uses: open-policy-agent/opa@0.48.0
       with:
         args: eval -f pretty --data=main.tf "data.azure.terraform.resource_name.azurerm_virtual_machine[0]"
       id: opa
