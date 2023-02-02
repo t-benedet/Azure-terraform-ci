@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run OPA
-      uses: open-policy-agent/opa@v0.48.0
+      uses: open-policy-agent/opa
       with:
         args: eval -f pretty --data=main.tf "data.azure.terraform.resource_name.azurerm_virtual_machine[0]"
       id: opa
@@ -28,6 +28,7 @@ jobs:
         fi
   
   terraform:
+    needs: terraform_analysis 
     name: 'Terraform'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
