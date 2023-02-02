@@ -8,7 +8,7 @@ on:
  
 jobs:
   Azure Login:
-    name: 'Azure_Login'
+    name: 'AzureLogin'
     env:
       ADMINISTRATOR_LOGIN:  ${{ secrets.AZURE_ADMINISTRATOR_LOGIN }}
       ADMINISTRATOR_PASSWORD: ${{ secrets.AZURE_ADMINISTRATOR_PASSWORD }}
