@@ -12,7 +12,8 @@ jobs:
     env:
       ADMINISTRATOR_LOGIN:  ${{ secrets.AZURE_ADMINISTRATOR_LOGIN }}
       ADMINISTRATOR_PASSWORD: ${{ secrets.AZURE_ADMINISTRATOR_PASSWORD }}
-
+    runs-on: ubuntu-latest
+    environment: production
     steps:
     - name: Log on Azure
       run: az login -u $ADMINISTRATOR_LOGIN -p $ADMINISTRATOR_PASSWORD
