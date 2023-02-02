@@ -23,7 +23,7 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    ressource_group_name = "RG-GC-AZR-TF"
+    resource_group_name = "RG-GC-AZR-TF"
     storage_account_name = "gentcloudazuretf2023"
     container_name = "terraform-state"
     key = "terraform.tfstate"
