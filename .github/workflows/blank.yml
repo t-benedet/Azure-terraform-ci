@@ -16,7 +16,7 @@ jobs:
     environment: production
     steps:
     - name: Log on Azure
-      run: az login -u $ADMINISTRATOR_LOGIN -p $ADMINISTRATOR_PASSWORD
+      run: az login -u ${{ secret.ADMINISTRATOR_LOGIN }} -p ${{ secret.ADMINISTRATOR_PASSWORD }}
   terraform:
     name: 'Terraform'
     env:
