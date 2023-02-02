@@ -7,6 +7,26 @@ on:
   pull_request:
  
 jobs:
+  terraform_analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run OPA
+      uses: openpolicyagent/opa@v1
+      with:
+        args: eval -f pretty --data=main.tf "data.azure.terraform.resource_name.azurerm_virtual_machine[0]"
+      id: opa
+
+    - name: Check OPA result
+      run: |
+        if [ "$(jq '.result | length' <(echo "${{ steps.opa.outputs.stdout }}"))" != "13" ]; then
+            echo "The virtual machine name must have exactly 13 characters."
+            exit 1
+        fi
+  
   terraform:
     name: 'Terraform'
     env:
