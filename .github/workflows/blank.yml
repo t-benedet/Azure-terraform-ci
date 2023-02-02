@@ -28,7 +28,7 @@ jobs:
         fi
   
   terraform:
-    needs: terraform_analysis 
+    needs: 'terraform_analysis' 
     name: 'Terraform'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
