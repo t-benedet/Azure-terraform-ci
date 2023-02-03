@@ -83,4 +83,40 @@ Once that is done, you should have 4 secrets :
 <summary> <h2>III - Terraform files</h2></summary>
 
 <br>
+
+You have to create a **providers.tf** file :
+
+```
+terraform {
+  required_version = ">=0.12"
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~>2.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~>3.0"
+    }
+    tls = {
+      source = "hashicorp/tls"
+      version = "~>4.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+terraform {
+  backend "azurerm" {
+    resource_group_name = "ResourceGroupFabryk" ## Name of your Resource Group created in the step "Configuration on Azure"
+    storage_account_name = "terraformfabryk" ## Name of your Storage account created in the step "Configuration on Azure"
+    container_name = "terraformstatefabryk" ## Name of the container created in the step "Configuration on Azure"
+    key = "terraform.tfstate"
+ }
+}
+```
 </details>
