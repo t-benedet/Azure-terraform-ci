@@ -2,7 +2,7 @@
 
 <br>
 
-## I - Create a Service principal
+## I - Configuration on Azure
 
 <br>
 
@@ -25,7 +25,7 @@ You have to keep the 4 first lines of the Json : **clientId**, **clientSecret**,
 
 <br>
 
-## II - Create a stockage backend for the Terraform state
+### • Create a stockage backend for the Terraform state
 
 <br>
 
@@ -37,7 +37,7 @@ az group create -g ResourceGroupFabryk -l northeurope
 
 <br>
 
-## III - Create a stockage account in the resource group
+### • Create a stockage account in the resource group
 
 <br>
 
@@ -47,7 +47,7 @@ az storage account create -n terraformfabryk -g ResourceGroupFabryk -l northeuro
 
 <br>
 
-## IV - Create a container in the resource group
+### • Create a container in the resource group
 <br>
 
 ```
