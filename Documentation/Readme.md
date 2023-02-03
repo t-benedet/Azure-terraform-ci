@@ -27,7 +27,6 @@ You have to keep the 4 first lines of the Json : **clientId**, **clientSecret**,
 
 ### • Create a stockage backend for the Terraform state
 ---
-
 <br>
 
 ```
@@ -40,7 +39,6 @@ az group create -g ResourceGroupFabryk -l northeurope
 
 ### • Create a stockage account in the resource group
 ---
-
 <br>
 
 ```
@@ -51,7 +49,6 @@ az storage account create -n terraformfabryk -g ResourceGroupFabryk -l northeuro
 
 ### • Create a container in the resource group
 ---
-
 <br>
 
 ```
