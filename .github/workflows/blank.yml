@@ -24,7 +24,8 @@ jobs:
         sudo chmod 755 /usr/local/bin/opa
 
     - name: Test OPA
-      run: result=$(opa eval --data '
+      run: | 
+        result=$(opa eval --data '
         package terraform
 
         vm_name = "TBCEP001"
@@ -35,10 +36,10 @@ jobs:
         } else {
           message = "VM name must have 13 characters"
         }')
-
-        if [[ $result == *"VM name must have 13 characters"* ]]; then
-        echo "Error: Invalid VM name"
-        exit 1
+        
+        if [[ $result == *"VM name must have 13 characters"* ]];then
+          echo "Error: Invalid VM name"
+          exit 1
         fi
 
   terraform:
