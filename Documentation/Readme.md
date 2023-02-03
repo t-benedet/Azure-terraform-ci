@@ -33,7 +33,7 @@ You have to keep the 4 first lines of the Json : **clientId**, **clientSecret**,
 az group create -g ResourceGroupFabryk -l northeurope
 ```
 
-![image2]()
+![image2](/Documentation/Pictures/2.png)
 
 <br>
 
