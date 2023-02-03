@@ -2,7 +2,9 @@
 
 <br>
 
-## I - Configuration on Azure
+<details open>
+
+<summary>## I - Configuration on Azure</summary>
 
 <br>
 
@@ -55,3 +57,5 @@ az storage account create -n terraformfabryk -g ResourceGroupFabryk -l northeuro
 az storage container create -n terraformstatefabryk --account-name terraformfabryk
 ```
 ![image3](/Documentation/Pictures/4.PNG)
+
+</details>
