@@ -7,7 +7,27 @@ on:
   pull_request:
  
 jobs:
+  OPA:
+    name: 'OPA analysis'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install OPA
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget
+        wget https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+        sudo mv opa_linux_amd64 /usr/local/bin/opa
+        sudo chmod 755 /usr/local/bin/opa
+
+    - name: Test OPA
+      run: opa version
+
   terraform:
+    needs: OPA
     name: 'Terraform'
     env:
       ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
