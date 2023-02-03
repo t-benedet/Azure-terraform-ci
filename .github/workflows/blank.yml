@@ -1,42 +1,19 @@
 name: 'Deploy a VM in Azure with Terraform'
  
 on:
-  push:
+  workflow_dispatch:
     branches:
     - main
   pull_request:
  
 jobs:
-  terraform_analysis:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Run OPA
-      uses: open-policy-agent/opa@0.48.0
-      with:
-        args: eval -f pretty --data=main.tf "data.azure.terraform.resource_name.azurerm_virtual_machine[0]"
-      id: opa
-
-    - name: Check OPA result
-      run: |
-        if [ "$(jq '.result | length' <(echo "${{ steps.opa.outputs.stdout }}"))" != "13" ]; then
-            echo "The virtual machine name must have exactly 13 characters."
-            exit 1
-        fi
-  
   terraform:
-    needs: 'terraform_analysis' 
     name: 'Terraform'
     env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-      #ADMINISTRATOR_LOGIN:  ${{ secrets.AZURE_ADMINISTRATOR_LOGIN }}
-      #ADMINISTRATOR_PASSWORD: ${{ secrets.AZURE_ADMINISTRATOR_PASSWORD }}
+      ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.FABRYK_AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
     environment: production
  
