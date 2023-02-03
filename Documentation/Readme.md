@@ -60,9 +60,16 @@ az storage container create -n terraformstatefabryk --account-name terraformfabr
 
 </details>
 
-<br>
-
 <details open>
 
 <summary> <h2>II - Secrets and terraform files </h2></summary>
+
+<br>
+
+You have to save the **clientId**, **clientSecret**, **subscriptionId** and **tenantId** as a secrets ig github.
+
+Go on Settings > Secrets and variables > Actions > New repository secret 
+
+![image4](/Documentation/Pictures/5.png)
+
 </details>
