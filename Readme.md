@@ -319,7 +319,7 @@ Then push your files on your Github repository
 
 <br>
 
-Now you juste have to click on the **Actions** button to see you Github Action :
+Now you juste have to click on the **Actions** button to see your Github Action :
 
 ![image8](/Documentation/Pictures/7.PNG).
 
