@@ -10,7 +10,7 @@ First of all, you have to create a Service Principal.
 
 To do that, go on your Azure account and start the cloud shell :
 
-![image1]()
+![image1](/Documentation/Pictures/Cloud__shell.png)
 
 Then you have to run these commands :
 
