@@ -45,9 +45,6 @@ az group create -g ResourceGroupFabryk -l northeurope
 az storage account create -n terraformfabryk -g ResourceGroupFabryk -l northeurope --sku Standard_LRS
 ```
 
-![pas dimage]
-
-
 <br>
 
 ## IV - Create a container in the resource group
@@ -56,4 +53,4 @@ az storage account create -n terraformfabryk -g ResourceGroupFabryk -l northeuro
 ```
 az storage container create -n terraformstatefabryk --account-name terraformfabryk
 ```
-
+![image3](/Documentation/Pictures/4.png)
