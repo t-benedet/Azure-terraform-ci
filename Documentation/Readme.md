@@ -62,7 +62,7 @@ az storage container create -n terraformstatefabryk --account-name terraformfabr
 
 <details open>
 
-<summary> <h2>II - Secrets and terraform files </h2></summary>
+<summary> <h2>II - Secrets</h2></summary>
 
 <br>
 
