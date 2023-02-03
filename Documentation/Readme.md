@@ -314,3 +314,32 @@ jobs:
       run: terraform apply -auto-approve
 
 ```
+<br>
+
+Now you juste have to click on the **Actions** button to see you Github Action :
+
+![image8](/Documentation/Pictures/7.PNG).
+
+<br>
+
+Press the " Run workflow " button to see it in action :
+
+![image9](/Documentation/Pictures/8.PNG)
+
+<br>
+
+And if you click on it :
+
+![image10](/Documentation/Pictures/9.PNG)
+
+<br>
+
+After few minutes :
+
+![image11](/Documentation/Pictures/10.PNG)
+
+<br>
+
+You can see the VM on Azure :
+
+![image12](/Documentation/Pictures/11.PNG)
