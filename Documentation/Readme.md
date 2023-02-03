@@ -19,7 +19,7 @@ Then you have to run these commands :
 az ad sp create-for-rbac --name TerraformFabryk --role Contributor --scopes /subscriptions/XXX --sdk auth
 ```
 
-![image1](/Documentation/Pictures/1)
+![image1](/Documentation/Pictures/1.png)
 
 You have to keep the 4 first lines of the Json : **clientId**, **clientSecret**, **subscriptionId** and **tenantId**.
 
