@@ -258,3 +258,59 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
 
 This is a default template find on the Microsoft Documentation. I've just modify some value such as the VM name, the virtual network name etc...
 </details>
+
+<details open>
+
+<summary> <h2>IV - Github Action </h2></summary>
+<br>
+
+Now you have to create file in order to setting up github action : **.github/workflows/XXX.yaml** 
+
+```
+name: 'Deploy a VM in Azure with Terraform'
+ 
+on:
+  workflow_dispatch: # To run manually the action
+    branches:
+    - main
+  pull_request:
+ 
+jobs:
+  terraform:
+    name: 'Terraform'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }} ## Secret saved as the step "Secrets"
+      ARM_CLIENT_SECRET: ${{ secrets.FABRYK_AZURE_AD_CLIENT_SECRET }} ## Secret saved as the step "Secrets"
+      ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }} ## Secret saved as the step "Secrets"
+      ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }} ## Secret saved as the step "Secrets"
+    runs-on: ubuntu-latest
+    environment: production
+ 
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform ## Use the file in the terraform directory
+ 
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: List directory
+      run: ls -a
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      run: terraform plan
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+
+```
