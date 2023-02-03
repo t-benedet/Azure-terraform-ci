@@ -328,7 +328,7 @@ Press the " Run workflow " button to see it in action :
 
 <br>
 
-And if you click on it :
+And if you click on it iyou can see the different step of the action :
 
 ![image10](/Documentation/Pictures/9.PNG)
 
