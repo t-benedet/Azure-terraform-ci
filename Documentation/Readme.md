@@ -4,7 +4,7 @@
 
 <details open>
 
-<summary>## I - Configuration on Azure</summary>
+<summary> ## I - Configuration on Azure</summary>
 
 <br>
 
