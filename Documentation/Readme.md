@@ -77,3 +77,10 @@ Once that is done, you should have 4 secrets :
 ![image5](/Documentation/Pictures/6.PNG)
 
 </details>
+
+<details open>
+
+<summary> <h2>III - Terraform files</h2></summary>
+
+<br>
+</details>
