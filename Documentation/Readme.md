@@ -53,4 +53,4 @@ az storage account create -n terraformfabryk -g ResourceGroupFabryk -l northeuro
 ```
 az storage container create -n terraformstatefabryk --account-name terraformfabryk
 ```
-![image3](/Documentation/Pictures/4.png)
+![image3](/Documentation/Pictures/4.PNG)
