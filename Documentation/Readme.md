@@ -74,6 +74,6 @@ Go on Settings > Secrets and variables > Actions > New repository secret.
 
 Once that is done, you should have 4 secrets :
 
-![image5](/Documentation/Pictures/6.png)
+![image5](/Documentation/Pictures/6.PNG)
 
 </details>
