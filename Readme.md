@@ -314,6 +314,9 @@ jobs:
       run: terraform apply -auto-approve
 
 ```
+
+Then push your files on your Github repository
+
 <br>
 
 Now you juste have to click on the **Actions** button to see you Github Action :
