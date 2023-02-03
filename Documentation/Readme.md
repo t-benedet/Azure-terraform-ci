@@ -38,6 +38,7 @@ az group create -g ResourceGroupFabryk -l northeurope
 <br>
 
 ### • Create a stockage account in the resource group
+---
 
 <br>
 
@@ -48,6 +49,8 @@ az storage account create -n terraformfabryk -g ResourceGroupFabryk -l northeuro
 <br>
 
 ### • Create a container in the resource group
+---
+
 <br>
 
 ```
