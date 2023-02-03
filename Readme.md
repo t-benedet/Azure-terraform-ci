@@ -2,7 +2,7 @@
 
 <br>
 
-<details open>
+<details close>
 
 <summary> <h2>I - Configuration on Azure</h2></summary>
 
@@ -60,7 +60,7 @@ az storage container create -n terraformstatefabryk --account-name terraformfabr
 
 </details>
 
-<details open>
+<details close>
 
 <summary> <h2>II - Secrets</h2></summary>
 
@@ -78,7 +78,7 @@ Once that is done, you should have 4 secrets :
 
 </details>
 
-<details open>
+<details close>
 
 <summary> <h2>III - Terraform files</h2></summary>
 
@@ -259,7 +259,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
 This is a default template find on the Microsoft Documentation. I've just modify some value such as the VM name, the virtual network name etc...
 </details>
 
-<details open>
+<details close>
 
 <summary> <h2>IV - Github Action </h2></summary>
 <br>
