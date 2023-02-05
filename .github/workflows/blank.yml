@@ -42,21 +42,21 @@ jobs:
  
     steps:
     # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
+    - name: "[+] Checkout"
       uses: actions/checkout@v2
 
     
-    - name: Setup Terraform
+    - name: "[+] Setup Terraform"
       uses: hashicorp/setup-terraform@v1
 
-    - name: List directory
+    - name: "[+] List directory"
       run: ls -a
 
-    - name: Terraform Init
+    - name: "[+] Terraform Init"
       run: terraform init
 
-    - name: Terraform Plan
+    - name: "[+] Terraform Plan"
       run: terraform plan
 
-    - name: Terraform Apply
+    - name: "[+] Terraform Apply"
       run: terraform apply -auto-approve
