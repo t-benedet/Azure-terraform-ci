@@ -23,6 +23,8 @@ jobs:
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
 
+        working-directory: ./terraform
+
     - name: "[+] Checkout"
       uses: actions/checkout@v2
 
