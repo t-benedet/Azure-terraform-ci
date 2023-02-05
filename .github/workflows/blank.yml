@@ -22,9 +22,10 @@ jobs:
         wget https://openpolicyagent.org/downloads/latest/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
+jobs:
+  Analysis:
+    name: 'Analysis terraform'
 
-        working-directory: ./terraform
-         
     steps:      
 
     - name: "[+] Checkout"
