@@ -25,6 +25,7 @@ jobs:
 jobs:
   Analysis:
     name: 'Analysis terraform'
+    runs-on: ubuntu-latest
 
     steps:      
 
