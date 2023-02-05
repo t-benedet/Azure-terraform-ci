@@ -23,7 +23,6 @@ jobs:
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
 
-    - name: Check if VM Name is ok 
       run:  
         working-directory: ./terraform
 
