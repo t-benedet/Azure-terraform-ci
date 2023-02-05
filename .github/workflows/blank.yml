@@ -9,7 +9,7 @@ on:
 jobs:
   OPA:
     name: 'Install OPA'
-    runs-on: ubuntu-latest
+    runs-on: hashicorp/terraform:latest
 
     steps:
     - name: "[+] Checkout code"
@@ -22,12 +22,6 @@ jobs:
         wget https://openpolicyagent.org/downloads/latest/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
-jobs:
-  Analysis:
-    name: 'Analysis terraform'
-    runs-on: ubuntu-latest
-
-    steps:      
 
     - name: "[+] Checkout"
       uses: actions/checkout@v2
