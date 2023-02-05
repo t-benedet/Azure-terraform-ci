@@ -22,7 +22,8 @@ jobs:
         wget https://openpolicyagent.org/downloads/latest/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
-
+    - name:
+      run: |
         sudo apt-get install -y git
         git clone https://github.com/hashicorp/terraform.git && cd terraform
         go install
