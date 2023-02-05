@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: [+] Checkout code
       uses: actions/checkout@v2
 
-    - name: Install OPA
+    - name: [+] Install OPA
       run: |
         sudo apt-get update
         sudo apt-get install -y wget
@@ -23,24 +23,31 @@ jobs:
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
 
-    - name: Test OPA
-      run: | 
-        result=$(opa eval --data '
-        package terraform
+    - name: Check if VM Name is ok 
+      run:  
+        working-directory: ./terraform
 
-        vm_name = "TBCEP001"
-        vm_name_length = length(vm_name)
+    - name: [+] Checkout
+      uses: actions/checkout@v2
 
-        vm_name_length == 13 {
-          message = "VM name is valid"
-        } else {
-          message = "VM name must have 13 characters"
-        }')
+    - name: [+] Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: [+] Terraform Init
+      run: terraform init
+
+    - name: [+] Terraform Plan
+      run: terraform plan
+
+    - name: [+] Terraform plan to tfplan.library
+      run: terraform plan --out tfplan.binary
+
+    - name: [+] tfplan.library to json
+      run: terraform show -json tfplan.binary > tfplan.json
+
+    - name: [+] Check if tfplan.json is ok with OPA rules
+      run: ./opa eval - tfplan.json -d /OPA/Rules/CountVMName.rego "data.main"
         
-        if [[ $result == *"VM name must have 13 characters"* ]];then
-          echo "Error: Invalid VM name"
-          exit 1
-        fi
 
   terraform:
     needs: OPA
