@@ -67,7 +67,7 @@ jobs:
 
     - name: "[+] Run AZ comamand:"
       run: |
-        az login
+        az login -u  ${{ secrets.ADMIN_LOGIN }} -p  ${{ secrets.ADMIN_PASSWORD }}
         az account show
         az group list
         pwd
