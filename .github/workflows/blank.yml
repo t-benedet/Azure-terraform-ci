@@ -1,4 +1,4 @@
-name: 'Deploy a VM in Azure with Terraform'
+name: 'Deploy VM in Azure with Terraform'
  
 on:
   workflow_dispatch:
@@ -7,49 +7,58 @@ on:
   pull_request:
  
 jobs:
-  OPA:
-    name: 'Install OPA'
+  #  OPA:
+  #    name: 'Install OPA'
+  #    runs-on: ubuntu-latest
+  #
+  #    steps:
+  #    - name: "[+] Checkout code"
+  #      uses: actions/checkout@v2
+  #
+  #    - name: "[+] Install OPA"
+  #      run: |
+  #        sudo apt-get update
+  #        sudo apt-get install -y wget
+  #        wget https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+  #        sudo mv opa_linux_amd64 /usr/local/bin/opa
+  #        sudo chmod 755 /usr/local/bin/opa
+  #
+  #    - name: "[+] Setup terrafom"
+  #      uses: hashicorp/setup-terraform@v1
+  #      with: 
+  #        tf_actions_working_dir: '.'
+  #
+  #    - name: "[+] Setup node"
+  #      uses: actions/setup-node@v3
+  #      with:
+  #        node-version: 18
+  #
+  setup_terraform:
+    #    needs: OPA
+    name: 'Setup terraform & create json for tfplan'
     runs-on: ubuntu-latest
-
-    steps:
-    - name: "[+] Checkout code"
-      uses: actions/checkout@v2
-
-    - name: "[+] Install OPA"
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y wget
-        wget https://openpolicyagent.org/downloads/latest/opa_linux_amd64
-        sudo mv opa_linux_amd64 /usr/local/bin/opa
-        sudo chmod 755 /usr/local/bin/opa
-  terraform:
-    needs: OPA
-    name: 'Terraform'
-    env:
-      ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.FABRYK_AZURE_AD_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
-    runs-on: ubuntu-latest
-    environment: production
- 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
         working-directory: ./terraform
- 
+
     steps:
-    # Checkout the repository to the GitHub Actions runner
+
+    - name: "[+] Setup terrafom"
+      uses: hashicorp/setup-terraform@v1
+      with:
+        tf_actions_working_dir: ./terraform
+
+    - name:  "[+] Setup node"
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
     - name: "[+] Checkout"
       uses: actions/checkout@v2
-
-    
-    - name: "[+] Setup Terraform"
-      uses: hashicorp/setup-terraform@v1
-
-    - name: "[+] List directory"
-      run: ls -a
+      
+    - name: "[+] Install AZ Cli"
+      run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
     - name: "[+] Terraform Init"
       run: terraform init
@@ -57,5 +66,52 @@ jobs:
     - name: "[+] Terraform Plan"
       run: terraform plan
 
-    - name: "[+] Terraform Apply"
-      run: terraform apply -auto-approve
+    - name: "[+] Terraform Plan to library"
+      run: terraform plan --out tfplan.binary
+
+    - name: "[+] Terraform library to JSON"
+      run: terraform show -json tfplan.binary > tfplan.json
+
+    - name: "[+] List directory"
+      run: ls -a
+
+    - name: "[+] Check VM name with OPA rules"
+      run: opa eval -i tfplan.json -d /OPA/Rules/CountVMName.rego "data.main"
+
+#  terraform:
+#    needs: setup_terraform
+#    name: 'Deploy VM'
+#    env:
+#      ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
+#      ARM_CLIENT_SECRET: ${{ secrets.FABRYK_AZURE_AD_CLIENT_SECRET }}
+#      ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
+#      ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
+#    runs-on: ubuntu-latest
+#    environment: production
+# 
+#    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+#    defaults:
+#      run:
+#        shell: bash
+#        working-directory: ./terraform
+# 
+#    steps:
+#    # Checkout the repository to the GitHub Actions runner
+#    - name: "[+] Checkout"
+#      uses: actions/checkout@v2
+#
+#    
+#    - name: "[+] Setup Terraform"
+#      uses: hashicorp/setup-terraform@v1
+#
+#    - name: "[+] List directory"
+#      run: ls -a
+#
+#    - name: "[+] Terraform Init"
+#      run: terraform init
+#
+#    - name: "[+] Terraform Plan"
+#      run: terraform plan
+#
+#    - name: "[+] Terraform Apply"
+#      run: terraform apply -auto-approve
