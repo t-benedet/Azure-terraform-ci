@@ -1,9 +1,10 @@
 package main
 
-#import data.terraform.module
-
 vm_name = input.planned_values.root_module.resources[0].values.name
+vm_name_length = count(vm_name)
 
-violation[{"message": "VM name must have exactly 13 characters."}] {
-  count(vm_name) != 13
+default msg := "Not ok"
+
+msg := "OK" {
+    vm_name_length == 13
 }
