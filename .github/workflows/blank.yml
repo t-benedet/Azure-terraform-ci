@@ -36,6 +36,11 @@ jobs:
   setup_terraform:
     #    needs: OPA
     name: 'Setup terraform & create json for tfplan'
+    env:
+       ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
+       ARM_CLIENT_SECRET: ${{ secrets.FABRYK_AZURE_AD_CLIENT_SECRET }}
+       ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
+       ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -60,16 +65,9 @@ jobs:
     - name: "[+] Install AZ Cli"
       run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-    - name: "[+] Connect to Azure"
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
-        tenant-id: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
-        subscription-id: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
-      run: az login
-
     - name: "[+] Run AZ comamand:"
       run: |
+        az login
         az account show
         az group list
         pwd
