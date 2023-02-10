@@ -1,0 +1,58 @@
+name: 'Deploy VM in Azure with Terraform and OPA '
+ 
+on:
+  workflow_dispatch:
+    branches:
+    - main
+  pull_request:
+ 
+env:
+  TF_VAR_vm_name: "my-vm"
+  TFPLAN: tfplan.json
+  TFPLAN_PATH: terraform/tfplan.json
+ 
+jobs:
+  Terraform:
+    name: 'Run Terraform'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "[+] Checkout code"
+      uses: actions/checkout@v2
+
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.TFPLAN }}
+        path: ${{ env.TFPLAN_PATH }}
+        retention-days: 1 
+
+    - name: "[+] Terraform step"
+      run: |
+        echo "terraform init"
+        echo 'terraform plan -var "vm_name=${TF_VAR_vm_name}" -out tfplan.json'
+        echo "terraform apply -auto-approve tfplan.json"
+  OPA: 
+    needs: terraform
+    uses: ./.github/workflows/blank.yml
+
+
+
+
+    #with: 
+    #  OUTPUT_PATH: tfplan.json
+    #  #run: echo "test"
+
+ # Apply:
+ #   needs: OPA
+ #  name: 'Apply Terraform changes'
+ #  runs-on: ubuntu-latest
+
+ #  steps:
+ #
+ #  - name: '[+] Checkout code'    
+ #    uses: actions/checkout@v2
+ #    run: echo "test"
+
+ #  - name: '[+] Apply Terraform changes'
+ #    run: echo "terraform apply tfplan.json"

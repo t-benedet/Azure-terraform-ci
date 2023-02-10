@@ -1,10 +1,13 @@
 package main
 
-vm_name = input.planned_values.root_module.resources[0].values.name
-vm_name_length = count(vm_name)
+deny[resource.values.name] {
+    some resource
+    all_resource[resource]
+    regex.match("virtual_machine", resource.type)
+    count(resource.values.name) != 13
+}
 
-default msg := "Not ok"
 
-msg := "OK" {
-    vm_name_length == 13
+all_resource[resource] {
+    resource := input.planned_values.root_module.resources[_]
 }
