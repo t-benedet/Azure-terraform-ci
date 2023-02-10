@@ -30,12 +30,8 @@ jobs:
         sudo chmod 755 /usr/local/bin/opa
 
   Terraform:
-    env:
-      working-directory: terraform
-
-    name: 'Install Terraform and generate tfplan.json'
-    uses: hashicorp/setup-terraform@v1
-
+    name: "Run terraform"
+    runs-on: ubuntu-latest
     steps:
 
     - name: "[+] Checkout code"
@@ -63,6 +59,10 @@ jobs:
 
   Validate:
     name: "Check VM name with OPA rules"
+    runs-on: ubuntu-latest
+
+
+    steps:
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3
@@ -94,14 +94,15 @@ jobs:
   VM:
     name: "Create VM in Azure"
     needs: OPA
+    runs-on: ubuntu-latest
 
     env:
       working-directory: terraform
 
+    steps:
+
     - name: 'Install Terraform'
       uses: hashicorp/setup-terraform@v1
-
-    steps:
 
     - name: "[+] Checkout code"
       uses: actions/checkout@v2
