@@ -97,14 +97,14 @@ resource "tls_private_key" "example_ssh" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
-  name                  = "Timtest1"
+  name                  = "S1190TBCEP001"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.my_terraform_nic.id]
   size                  = "Standard_DS1_v2"
 
   os_disk {
-    name                 = "myOsDisk4"
+    name                 = "myOsDisk5"
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
   }
@@ -116,7 +116,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
     version   = "latest"
   }
 
-  computer_name                   = "Tintest1"
+  computer_name                   = "S1190TBCEP001"
   admin_username                  = "azureuser"
   disable_password_authentication = true
 
