@@ -37,7 +37,7 @@ jobs:
     - name: "[+] Install AZ cli"
       run: |
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-        az login -u ${{ secrets.ADMINISTRATOR_LOGIN }} -p ${{ secrets.ADMINISTRATOR_PASSWORD }} --use-device-code
+        az login --username ${{ secrets.ADMINISTRATOR_LOGIN }} --password ${{ secrets.ADMINISTRATOR_PASSWORD }} --use-device-code
 
     - name: "[+] Terraform init"
       run: |
