@@ -81,6 +81,7 @@ jobs:
 
     - name: "[+] Show result.json"
       run: cat $OUTPUT_PATH
+
     - name: "[+] Exit 1 if error "
       run: |
         #[+] Exit 1 if error
@@ -97,8 +98,8 @@ jobs:
     env:
       working-directory: terraform
 
-    name: 'Install Terraform'
-    uses: hashicorp/setup-terraform@v1
+    - name: 'Install Terraform'
+      uses: hashicorp/setup-terraform@v1
 
     steps:
 
