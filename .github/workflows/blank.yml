@@ -7,9 +7,10 @@ on:
   pull_request:
 env:
   OPA_VERSION: v0.49.0
+  #MAIN_TF: terraform/main.tf
   TF_FILE_PATH: tfplan.json
   REGO_PATH: OPA/Rules/CountVMName.rego
-  OUTPUT_PATH: result.json
+  OUTPUT_PATH: VM_TBCEP.json
  
 jobs:
   OPA:
@@ -28,17 +29,56 @@ jobs:
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
 
+  Terraform:
+    env:
+      working-directory: terraform
+
+    name: 'Install Terraform and generate tfplan.json'
+    uses: hashicorp/setup-terraform@v1
+
+    steps:
+
+    - name: "[+] Checkout code"
+      uses: actions/checkout@v2
+
+    - name: "[+] Terraform init"
+      run: |
+        echo "Terraform init"
+        terraform init 
+
+    - name: "[+] Terraform plan"
+      run: |
+        echo "Terraform plan to .library"
+        terraform plan --out tfplan.binary
+    
+    - name: "[+] Terraform .library to .json"
+      run: |
+        echo "Terraform plan to json"
+        terraform show -json tfplan.binary > $TF_FILE_PATH
+
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
-        name: tfplan.json
+        name: ${{ env.TF_FILE_PATH }}
 
+  Validate:
+    name: "Check VM name with OPA rules"
+
+     - name: 'Upload Artifact'
+       uses: actions/upload-artifact@v3
+       with:
+        name: ${{ env.TF_FILE_PATH }}
+        path: terraform/${{ env.TF_FILE_PATH }}
+        retention-days: 1 
+           
     - name: "[+] Check VM name with OPA rules"
       run: |
         opa eval -i $TF_FILE_PATH -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
+        echo "List files in directory"
         ls
-        ls $OUTPUT_PATH
+        echo "Display content of $OUTPUT_PATH"
         cat $OUTPUT_PATH
+
     - name: "[+] Show result.json"
       run: cat $OUTPUT_PATH
     - name: "[+] Exit 1 if error "
@@ -49,3 +89,35 @@ jobs:
         else
             exit 1
         fi
+
+  VM:
+    name:"Create VM in Azure"
+    needs: OPA
+
+    env:
+      working-directory: terraform
+
+    name: 'Install Terraform'
+    uses: hashicorp/setup-terraform@v1
+
+    steps:
+
+    - name: "[+] Checkout code"
+      uses: actions/checkout@v2
+
+    - name: "[+] Terraform init"
+      run: |
+        echo "Terraform init"
+        terraform init 
+
+    - name: "[+] Terraform plan"
+      run: |
+        echo "Terraform plan to .library"
+        terraform plan --out main.tfplan
+
+    - name: "[+] Create VM on Azure"
+      run: |
+        echo "Create VM on Azure"
+        terraform apply main.tfplan
+
+      
