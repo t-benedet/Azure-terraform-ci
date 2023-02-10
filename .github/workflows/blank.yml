@@ -44,7 +44,7 @@ jobs:
       uses: azure/login@v1
       with:
         ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.FABRYK_AZURE_AD_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
 
     - name: "[+] Check AZ Login"
