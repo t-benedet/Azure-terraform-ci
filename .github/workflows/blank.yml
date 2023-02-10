@@ -14,8 +14,10 @@ env:
  
 jobs:
   Terraform:
-    name: "Run terraform"
+    name: "Run terraform" 
     runs-on: ubuntu-latest
+    env:
+      working-directory: terraform
     steps:
 
     - name: "[+] Checkout code"
