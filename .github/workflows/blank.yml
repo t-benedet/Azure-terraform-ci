@@ -16,10 +16,12 @@ jobs:
   Terraform:
     name: "Run terraform" 
     runs-on: ubuntu-latest
+
+    defaults:
       run:
         shell: bash
         working-directory: ./terraform
-
+        
     steps:
 
     - name: "[+] Checkout code"
@@ -99,6 +101,8 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
+
+    defaults:
       run:
         shell: bash
         working-directory: ./terraform
