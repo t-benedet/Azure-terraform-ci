@@ -41,7 +41,7 @@ jobs:
       with:
         name: ${{ env.TF_FILE_PATH }}
 
-  Validate:
+  OAP:
     needs: Terraform
     name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
