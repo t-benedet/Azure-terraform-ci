@@ -5,11 +5,12 @@ on:
     branches:
     - main
   pull_request:
+
  
 env:
   TF_VAR_vm_name: "my-vm"
-  TFPLAN: tfplan.json
-  TFPLAN_PATH: terraform/tfplan.json
+  TFPLAN: VM_TBCEP.json
+  TFPLAN_PATH: terraform/VM_TBCEP.json
  
 jobs:
   Terraform:
