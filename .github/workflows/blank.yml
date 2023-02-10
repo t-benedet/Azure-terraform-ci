@@ -1,7 +1,7 @@
 name: 'Check compliance of tfplan with OPA'
  
 on:
-  workflow_call:
+  workflow_dispatch:
   #  branches:
    # - main
   pull_request:
