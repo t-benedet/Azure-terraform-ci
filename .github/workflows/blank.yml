@@ -64,12 +64,12 @@ jobs:
   Validate:
     name: "Check VM name with OPA rules"
 
-     - name: 'Upload Artifact'
-       uses: actions/upload-artifact@v3
-       with:
-        name: ${{ env.TF_FILE_PATH }}
-        path: terraform/${{ env.TF_FILE_PATH }}
-        retention-days: 1 
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v3
+      with:
+       name: ${{ env.TF_FILE_PATH }}
+       path: terraform/${{ env.TF_FILE_PATH }}
+       retention-days: 1 
            
     - name: "[+] Check VM name with OPA rules"
       run: |
