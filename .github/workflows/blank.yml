@@ -13,22 +13,6 @@ env:
   OUTPUT_PATH: VM_TBCEP.json
  
 jobs:
-  OPA:
-    name: 'Install OPA'
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: "[+] Checkout code"
-      uses: actions/checkout@v2
-
-    - name: "[+] Install OPA"
-      run: |
-        sudo apt-get update
-        sudo apt-get install wget jq -y
-        wget https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
-        sudo mv opa_linux_amd64 /usr/local/bin/opa
-        sudo chmod 755 /usr/local/bin/opa
-
   Terraform:
     name: "Run terraform"
     runs-on: ubuntu-latest
@@ -58,11 +42,22 @@ jobs:
         name: ${{ env.TF_FILE_PATH }}
 
   Validate:
+    needs: Terraform
     name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
 
-
     steps:
+
+    - name: "[+] Checkout code"
+      uses: actions/checkout@v2
+
+    - name: "[+] Install OPA"
+      run: |
+        sudo apt-get update
+        sudo apt-get install wget jq -y
+        wget https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
+        sudo mv opa_linux_amd64 /usr/local/bin/opa
+        sudo chmod 755 /usr/local/bin/opa
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3
