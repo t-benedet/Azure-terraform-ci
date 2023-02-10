@@ -62,36 +62,36 @@ jobs:
         name: ${{ env.TF_FILE_PATH }}
 
   Validate:
-    name: "Check VM name with OPA rules"
+      name: "Check VM name with OPA rules"
 
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
-      with:
-       name: ${{ env.TF_FILE_PATH }}
-       path: terraform/${{ env.TF_FILE_PATH }}
-       retention-days: 1 
-           
-    - name: "[+] Check VM name with OPA rules"
-      run: |
-        opa eval -i $TF_FILE_PATH -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
-        echo "List files in directory"
-        ls
-        echo "Display content of $OUTPUT_PATH"
-        cat $OUTPUT_PATH
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+         name: ${{ env.TF_FILE_PATH }}
+         path: terraform/${{ env.TF_FILE_PATH }}
+         retention-days: 1 
 
-    - name: "[+] Show result.json"
-      run: cat $OUTPUT_PATH
-    - name: "[+] Exit 1 if error "
-      run: |
-        #[+] Exit 1 if error
-        if  [[ -z $(cat $OUTPUT_PATH | jq '.[]') ]]; then
-            exit 0
-        else
-            exit 1
-        fi
+      - name: "[+] Check VM name with OPA rules"
+        run: |
+          opa eval -i $TF_FILE_PATH -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
+          echo "List files in directory"
+          ls
+          echo "Display content of $OUTPUT_PATH"
+          cat $OUTPUT_PATH
+
+      - name: "[+] Show result.json"
+        run: cat $OUTPUT_PATH
+      - name: "[+] Exit 1 if error "
+        run: |
+          #[+] Exit 1 if error
+          if  [[ -z $(cat $OUTPUT_PATH | jq '.[]') ]]; then
+              exit 0
+          else
+              exit 1
+          fi
 
   VM:
-    name:"Create VM in Azure"
+    name: "Create VM in Azure"
     needs: OPA
 
     env:
