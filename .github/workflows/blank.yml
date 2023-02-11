@@ -46,10 +46,6 @@ jobs:
       with:
         creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
 
-    - name: "[+] Login Az"
-      run: |    
-          az login
-
     - name: "[+] Check AZ Login"
       run: |
         az account show
