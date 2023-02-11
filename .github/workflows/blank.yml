@@ -74,7 +74,7 @@ jobs:
   OPA:
     needs: Terraform
     
-name: "Check VM name with OPA rules"
+    name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
 
     defaults:
