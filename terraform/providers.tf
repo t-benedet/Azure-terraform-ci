@@ -23,9 +23,9 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name = "ResourceGroupFabryk"
-    storage_account_name = "terraformfabryk"
-    container_name = "terraformstatefabryk"
+    resource_group_name = "ResourceGroupFabryk2"
+    storage_account_name = "terraformfabryk2"
+    container_name = "terraformstatefabryk2"
     key = "terraform.tfstate"
  }
 }

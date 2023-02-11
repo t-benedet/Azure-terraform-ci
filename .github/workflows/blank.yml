@@ -10,7 +10,7 @@ env:
   #MAIN_TF: terraform/main.tf
   TF_FILE: tfplan.json
   TF_FILE_PATH: ./terraform
-  REGO_PATH: OPA/Rules/CountVMName.rego
+  REGO_PATH: ./OPA/Rules/CountVMName.rego
   OUTPUT_PATH: VM_TBCEP.json
  
 permissions:
@@ -76,8 +76,8 @@ jobs:
     
     name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
-
-     #defaults:
+     
+      #defaults:
      # run:
      #   shell: bash
      #   working-directory: ./terraform
@@ -98,13 +98,12 @@ jobs:
     - name: '[+] Download Artifact'
       uses: actions/download-artifact@v3
       with:
-        name: tfplan.json
-        #name: ${{ env.TF_FILE }}
-         #path: ${{ env.TF_FILE_PATH }}
+        name: ${{ env.TF_FILE }}
+        path: ${{ env.TF_FILE_PATH }}
 
     - name: "[+] Apply OPA test on tfplan.json"
       run: |
-        opa eval -i tfplan.json -d ./OPA/Rules/CountVMName.rego "data.main.deny" -f pretty > $OUTPUT_PATH 
+        opa eval -i $TF_FILE  -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH 
 
     - name: "[+] Show result.json"
       run: cat $OUTPUT_PATH
@@ -122,10 +121,11 @@ jobs:
     name: "Create VM in Azure"
     needs: OPA
     env:
-      ARM_CLIENT_ID: ${{ secrets.FABRYK_AZURE_AD_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.FABRYK_AZURE_AD_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.FABRYK_AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.FABRYK_AZURE_AD_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+
     runs-on: ubuntu-latest
 
     defaults:
@@ -140,6 +140,11 @@ jobs:
 
     - name: "[+] Checkout code"
       uses: actions/checkout@v2
+
+    - name: "[+] Run AZ login "
+      uses: azure/login@v1
+      with:
+        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
 
     - name: "[+] Terraform init"
       run: |
