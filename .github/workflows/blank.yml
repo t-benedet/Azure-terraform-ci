@@ -59,11 +59,9 @@ jobs:
       run: |
         echo "Terraform plan to .library"
         terraform plan --out tfplan.binary
-    
-    - name: "[+] Terraform .library to .json"
-      run: |
-        echo "Terraform plan to json"
-        terraform show -json tfplan.binary > $TF_FILE_PATH
+        ls 
+        echo "Terraform .library to .json"
+        terraform show -json tfplan.binary > tfplan.json
         ls
 
     - name: Download a single artifact
