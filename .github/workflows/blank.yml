@@ -69,7 +69,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ${{ env.TF_FILE }}
-        path: ${{ env. TF_FILE_PATH }} 
+        path: ${{ env.TF_FILE_PATH }} 
 
   OPA:
     needs: Terraform
@@ -92,13 +92,13 @@ jobs:
     - name: 'Upload Artifact'
       uses: actions/download-artifact@v3
       with:
-       name: ${{ env.TF_FILE_PATH }}
-       path: terraform/${{ env.TF_FILE_PATH }}
+       name: ${{ env.TF_FILE }}
+       path: ${{ env.TF_FILE_PATH }}
        retention-days: 1 
 
     - name: "[+] Check VM name with OPA rules"
       run: |
-        opa eval -i $TF_FILE_PATH -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
+        opa eval -i $TF_FILE -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
         echo "List files in directory"
         ls
         echo "Display content of $OUTPUT_PATH"
