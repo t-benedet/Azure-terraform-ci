@@ -93,16 +93,14 @@ jobs:
        name: ${{ env.TF_FILE }}
        path: ${{ env.TF_FILE_PATH }}
 
-    - name: "[+] Install OPA"
+    - name: "[+] Install OPA and apply OPA test"
       run: |
         sudo apt-get update
         sudo apt-get install wget jq -y
         wget https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
-
-    - name: "[+] Check VM name with OPA rules"
-      run: |
+        opa version
         opa eval -i $TF_FILE -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
 
     - name: "[+] Show result.json"
