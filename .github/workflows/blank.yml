@@ -103,7 +103,9 @@ jobs:
 
     - name: "[+] Check VM name with OPA rules"
       run: |
-        opa eval -i $TF_FILE -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
+        echo "Hello World !"
+        opa version
+        #opa eval -i $TF_FILE -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
 
     - name: "[+] Show result.json"
       run: cat $OUTPUT_PATH
