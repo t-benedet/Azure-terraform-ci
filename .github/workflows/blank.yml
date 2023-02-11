@@ -75,6 +75,9 @@ jobs:
     needs: Terraform
     name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
+    run:
+      shell: bash
+      working-directory: ./terraform
 
     steps:
 
