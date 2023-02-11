@@ -92,7 +92,6 @@ jobs:
       with:
        name: ${{ env.TF_FILE }}
        path: ${{ env.TF_FILE_PATH }}
-       retention-days: 1
 
     - name: "[+] Install OPA"
       run: |
@@ -101,9 +100,6 @@ jobs:
         wget https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
-        echo "OPA Version"
-        opa version
-
 
     - name: "[+] Check VM name with OPA rules"
       run: |
