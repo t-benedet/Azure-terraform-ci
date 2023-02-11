@@ -64,6 +64,7 @@ jobs:
       run: |
         echo "Terraform plan to json"
         terraform show -json tfplan.binary > $TF_FILE_PATH
+        ls
 
     - name: Download a single artifact
       uses: actions/download-artifact@v3
