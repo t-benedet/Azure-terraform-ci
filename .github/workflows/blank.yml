@@ -69,7 +69,7 @@ jobs:
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
-        name: ${{ env.TF_FILE_PATH }}
+        name: ./terraform/${{ env.TF_FILE_PATH }}
 
   OPA:
     needs: Terraform
