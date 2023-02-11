@@ -73,7 +73,8 @@ jobs:
 
   OPA:
     needs: Terraform
-    name: "Check VM name with OPA rules"
+    
+name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
 
     defaults:
@@ -93,14 +94,17 @@ jobs:
        name: ${{ env.TF_FILE }}
        path: ${{ env.TF_FILE_PATH }}
 
-    - name: "[+] Install OPA and apply OPA test"
+    - name: "[+] Install OPA"
       run: |
         sudo apt-get update
         sudo apt-get install wget jq -y
         wget https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
-        ./opa eval -i $TF_FILE -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
+
+    - name: "[+] Apply OPA test on tfplan.json"
+      run: |
+        opa eval -i $TF_PLAN -d $REGO_PATH -f pretty > $OUTPUT_PATH 
 
     - name: "[+] Show result.json"
       run: cat $OUTPUT_PATH
