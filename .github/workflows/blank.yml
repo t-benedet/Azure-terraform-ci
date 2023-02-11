@@ -77,10 +77,10 @@ jobs:
     name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
      
-      #defaults:
-     # run:
-     #   shell: bash
-     #   working-directory: ./terraform
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
 
     steps:
 
