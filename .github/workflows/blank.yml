@@ -77,21 +77,15 @@ jobs:
     name: "Check VM name with OPA rules"
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./terraform
+     #defaults:
+     # run:
+     #   shell: bash
+     #   working-directory: ./terraform
 
     steps:
 
     - name: "[+] Checkout code"
       uses: actions/checkout@v2
-
-    - name: 'Upload Artifact'
-      uses: actions/download-artifact@v3
-      with:
-       name: ${{ env.TF_FILE }}
-       path: ${{ env.TF_FILE_PATH }}
 
     - name: "[+] Install OPA"
       run: |
@@ -100,6 +94,13 @@ jobs:
         wget https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
+
+    - name: '[+] Download Artifact'
+      uses: actions/download-artifact@v3
+      with:
+        name: tfplan.json
+        #name: ${{ env.TF_FILE }}
+         #path: ${{ env.TF_FILE_PATH }}
 
     - name: "[+] Apply OPA test on tfplan.json"
       run: |
