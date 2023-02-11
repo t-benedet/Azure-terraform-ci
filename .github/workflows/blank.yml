@@ -1,4 +1,4 @@
-name: 'Check compliance of tfplan with OPA'
+name: 'Deploy on Azure'
  
 on:
   workflow_dispatch:
