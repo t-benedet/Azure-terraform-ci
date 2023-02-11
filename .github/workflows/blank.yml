@@ -104,7 +104,7 @@ jobs:
 
     - name: "[+] Apply OPA test on tfplan.json"
       run: |
-        opa eval -i $TF_PLAN -d $REGO_PATH -f pretty > $OUTPUT_PATH 
+        opa eval -i $TF_PLAN -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH 
 
     - name: "[+] Show result.json"
       run: cat $OUTPUT_PATH
