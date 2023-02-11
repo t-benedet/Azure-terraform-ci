@@ -100,8 +100,7 @@ jobs:
         wget https://github.com/open-policy-agent/opa/releases/download/$OPA_VERSION/opa_linux_amd64
         sudo mv opa_linux_amd64 /usr/local/bin/opa
         sudo chmod 755 /usr/local/bin/opa
-        opa version
-        opa eval -i $TF_FILE -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
+        ./opa eval -i $TF_FILE -d $REGO_PATH "data.main.deny" -f pretty > $OUTPUT_PATH
 
     - name: "[+] Show result.json"
       run: cat $OUTPUT_PATH
