@@ -8,7 +8,8 @@ on:
 env:
   OPA_VERSION: v0.49.0
   #MAIN_TF: terraform/main.tf
-  TF_FILE_PATH: tfplan.json
+  TF_FILE: tfplan.json
+  TF_FILE_PATH: ./terraform
   REGO_PATH: OPA/Rules/CountVMName.rego
   OUTPUT_PATH: VM_TBCEP.json
  
@@ -64,10 +65,11 @@ jobs:
         terraform show -json tfplan.binary > tfplan.json
         ls
 
-    - name: Download a single artifact
+    - name: "[+] Upload a single artifact"
       uses: actions/upload-artifact@v3
       with:
-        name: tfplan.json
+        name: ${{ env.TF_FILE }}
+        path: ${{ env. TF_FILE_PATH }} 
 
   OPA:
     needs: Terraform
