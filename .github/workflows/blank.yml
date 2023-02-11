@@ -65,7 +65,7 @@ jobs:
         ls
 
     - name: Download a single artifact
-      uses: actions/download-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: tfplan.json
 
@@ -88,7 +88,7 @@ jobs:
         sudo chmod 755 /usr/local/bin/opa
 
     - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
+      uses: actions/download-artifact@v3
       with:
        name: ${{ env.TF_FILE_PATH }}
        path: terraform/${{ env.TF_FILE_PATH }}
